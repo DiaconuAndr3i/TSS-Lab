@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MaxEventsEquivalencePartitioning.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">tss-lab</a> &gt; <a href="index.source.html" class="el_package">org.project</a> &gt; <span class="el_source">MaxEventsEquivalencePartitioning.java</span></div><h1>MaxEventsEquivalencePartitioning.java</h1><pre class="source lang-java linenums">package org.project;
+
+import org.project.utils.Pair;
+
+import java.util.Comparator;
+import java.util.List;
+import java.util.Objects;
+
+<span class="nc" id="L9">public class MaxEventsEquivalencePartitioning {</span>
+    public static Integer maxEvents(List&lt;Pair&lt;Double, Double&gt;&gt; events) {
+
+<span class="fc bfc" id="L12" title="All 2 branches covered.">        if(events.size() == 0)</span>
+<span class="fc" id="L13">            throw new IllegalArgumentException(&quot;EROARE DATE DE INPUT&quot;);</span>
+
+<span class="fc" id="L15">        events.stream()</span>
+<span class="pc bpc" id="L16" title="1 of 4 branches missed.">                .filter(pair -&gt; pair.getKey() &lt; 0 || pair.getKey() &gt; 23 ||</span>
+<span class="pc bpc" id="L17" title="1 of 4 branches missed.">                        pair.getValue() &lt; 0 || pair.getValue() &gt; 23 ||</span>
+<span class="pc bpc" id="L18" title="2 of 4 branches missed.">                        pair.getValue() % 1 != 0 || pair.getKey() % 1 != 0 ||</span>
+<span class="fc bfc" id="L19" title="All 2 branches covered.">                        pair.getValue() &lt; pair.getKey())</span>
+<span class="fc" id="L20">                .findFirst()</span>
+<span class="fc" id="L21">                .ifPresent(pair -&gt; {</span>
+<span class="fc" id="L22">                    throw new IllegalArgumentException(&quot;EROARE DATE DE INPUT&quot;);</span>
+                });
+
+<span class="fc" id="L25">        events.sort(Comparator.comparingDouble(Pair::getValue));</span>
+
+<span class="fc" id="L27">        int count = 0;</span>
+<span class="fc" id="L28">        Double end = -1.0;</span>
+
+<span class="fc bfc" id="L30" title="All 2 branches covered.">        for (Pair&lt;Double, Double&gt; event : events) {</span>
+<span class="pc bpc" id="L31" title="1 of 4 branches missed.">            if (event.getKey() &gt;= end &amp;&amp; !Objects.equals(event.getKey(), event.getValue())) {</span>
+<span class="fc" id="L32">                count++;</span>
+<span class="fc" id="L33">                end = event.getValue();</span>
+            }
+<span class="fc" id="L35">        }</span>
+<span class="fc" id="L36">        return count;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>
